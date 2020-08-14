@@ -4,7 +4,14 @@
 
 ##### 1.三个发行版本
 
-> sun和openjdk
+###### sun和openjdk的区别
+
+- 授权协议的不同
+- OpenJDK不包含Deployment（部署）功能
+- OpenJDK源代码不完整
+- sun把部分源代码用开源代码替换
+- openjdk只包含最精简的JDK
+- open不能使用Java商标
 
 ```
 标准版（J2SE） Standard Edition(标准版) J2SE 包含构成Java语言核心的类。
@@ -944,11 +951,11 @@ java.util包中的辅助工具类Arrays,是用来对数组中的元素进行操�
 
 ##### 2.集合框架图
 
-##### 框架总览<img src="F:\md笔记\java\img\java集合框架图.jpg" alt="java集合框架图" style="zoom: 80%;" />
+##### 框架总览<img src=".\img\java集合框架图.jpg" alt="java集合框架图" style="zoom: 80%;" />
 
-##### collocation大类 <img src="F:\md笔记\java\img\collection.png" alt="collection" style="zoom: 33%;" />                                      
+##### collocation大类 <img src=".\img\collection.png" alt="collection" style="zoom: 33%;" />                                      
 
-##### map大类<img src="F:\md笔记\java\img\map.png" alt="map" style="zoom: 40%;" />
+##### map大类<img src=".\img\map.png" alt="map" style="zoom: 40%;" />
 
 ##### 3.集合的遍历
 
@@ -1093,7 +1100,7 @@ Java的HashMap采用的就是拉链法。
 从jdk1.8开始，HashMap主要是由数组+链表+红黑树实现的，相比jdk1.7而言，多了一个红黑树实现。当链表长度超过8的时候，就将链表变成红黑树，如图所示。
 ```
 
-<img src="F:\md笔记\corejava\img\hashmap.png" alt="hashmap" style="zoom:50%;" />`HashMap结构示意图`
+<img src=".\img\hashmap.png" alt="hashmap" style="zoom:50%;" />`HashMap结构示意图`
 
 ###### 2.HashMap源码分析
 
@@ -1176,7 +1183,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 > 增加删除查找键值对都要定位到数组的位置，通过`key`获取数组下标，其中`length`指的是容器数组的大小。
 
-<img src="F:\md笔记\corejava\img\按K获取数组下标.png" alt="按K获取数组下标" style="zoom: 40%;" />`步骤图(与运算而不是取模)`
+<img src=".\img\按K获取数组下标.png" alt="按K获取数组下标" style="zoom: 40%;" />`步骤图(与运算而不是取模)`
 
 ```java
 /**获取hash值方法*/
@@ -1194,7 +1201,7 @@ static int indexFor(int h, int length) {
 
 ###### 5.put方法的详细执行
 
-<img src="F:\md笔记\corejava\img\put.png" style="zoom: 75%;" />`put操作`
+<img src=".\img\put.png" style="zoom: 75%;" />`put操作`
 
 ###### 6.扩容
 
@@ -1205,13 +1212,13 @@ static int indexFor(int h, int length) {
 > - **5、遍历table[i]，判断链表长度是否大于8，大于8的话把链表转换为红黑树，在红黑树中执行插入操作，否则进行链表的插入操作；遍历过程中若发现key已经存在直接覆盖value即可；**
 > - **6、插入成功后，判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容操作；**
 
-<img src="F:\md笔记\corejava\img\扩容.png" style="zoom:75%;" />`扩容逻辑`
+<img src=".\img\扩容.png" style="zoom:75%;" />`扩容逻辑`
 
 ###### 扩容后节点的重新存放规则
 
 > 存放逻辑是通过判断节点hash值(该hash值是重新计算的)与原数组大小与的结果是否为0来决定位置不动还是移动到扩容的部分去。下图中的最下面的oldtable数据标错了。仅仅是作为演示
 
-<img src="F:\md笔记\corejava\img\存放规则.png" alt="存放规则" style="zoom:50%;" />`存放逻辑`
+<img src=".\img\存放规则.png" alt="存放规则" style="zoom:50%;" />`存放逻辑`
 
 
 
@@ -1259,7 +1266,7 @@ B*树：
 
 ###### 红黑树的样子
 
-<img src="F:\md笔记\corejava\img\红黑树.png" alt="红黑树" style="zoom: 25%;" /> `红黑树的大致结构`
+<img src=".\img\红黑树.png" alt="红黑树" style="zoom: 25%;" /> `红黑树的大致结构`
 
 ###### 1.红黑树的特点
 
@@ -1288,17 +1295,17 @@ NIL和null的区别，NIL是无值的意思不是空
 
 ###### 3.插入示例
 
-<img src="F:\md笔记\corejava\img\插入.png" alt="插入" style="zoom: 40%;" />`插入节点后的树结构调整流程`
+<img src=".\img\插入.png" alt="插入" style="zoom: 40%;" />`插入节点后的树结构调整流程`
 
 
 
 ###### 4.删除示例
 
-<img src="F:\md笔记\corejava\img\删除.png" style="zoom: 25%;" />`删除的两种调整逻辑方式`
+<img src=".\img\删除.png" style="zoom: 25%;" />`删除的两种调整逻辑方式`
 
 ###### 5.查询过程
 
-<img src="F:\md笔记\corejava\img\查询过程.png" style="zoom:33%;" />`查询过程`
+<img src=".\img\查询过程.png" style="zoom:33%;" />`查询过程`
 
 ##### 二叉树
 
@@ -1311,7 +1318,7 @@ NIL和null的区别，NIL是无值的意思不是空
 
 ###### 1.二叉树的遍历
 
-<img src="F:\md笔记\corejava\img\二叉树例子.png" style="zoom:50%;" />`简单的二叉树例子`
+<img src=".\img\二叉树例子.png" style="zoom:50%;" />`简单的二叉树例子`
 
 ```
 1、先序遍历二叉树顺序：根节点 –> 左子树 –> 右子树，即先访问打印根节点再访问打印是左节点（如果左节点不是叶子节点则作为根节点再先序遍历），最后是右子树（规则同左节点）。
@@ -2357,7 +2364,7 @@ public class Thread implements Runnable{
 
 ###### 3.线程生命周期
 
-<img src="F:\md笔记\corejava\img\线程生命周期.jpg" style="zoom:65%;" />`生命周期`
+<img src=".\img\线程生命周期.jpg" style="zoom:65%;" />`生命周期`
 
 ##### 6.hreadGroup线程组
 
