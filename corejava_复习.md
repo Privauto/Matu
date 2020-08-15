@@ -111,7 +111,7 @@ package
 	1.最终会是以文件夹的形式体现出来(有什么包,就必须有什么文件夹,运行的时候.class文件必须在这个文件夹下面)
 	2..java文件中有多个package的时候,用.分割并且结尾用;号结束 例如:(com.kaikai.test;)
 	3.包也是java中类的标识的一部分,确定某一个类是通过包名加类名来唯一确定的 比较运行java类的时候:
-	java package.类名 (java com.briup.test.HelloPackage)
+	java package.类名 (java com.kaikai.test.HelloPackage)
 import
 	1.导包用的关键字
 	2.如果你想在当前这个类使用其他的类,那么就必须通过这个关键字,把那个类导入进来
@@ -1694,13 +1694,13 @@ public enum Gender{
 > 通过反编译枚举类型的.class文件可知
 
 ```java
-public final class com.briup.test.Gender extends java.lang.Enum<com.briup.test.Gender> {
-    public static final com.briup.test.Gender MALE;
-    public static final com.briup.test.Gender FEMALE;
+public final class com.kaikai.test.Gender extends java.lang.Enum<com.kaikai.test.Gender> {
+    public static final com.kaikai.test.Gender MALE;
+    public static final com.kaikai.test.Gender FEMALE;
     static {};
-    private com.briup.test.Gender(java.lang.String, int);
-    public static com.briup.test.Gender[] values();
-    public static com.briup.test.Gender valueOf(java.lang.String);
+    private com.kaikai.test.Gender(java.lang.String, int);
+    public static com.kaikai.test.Gender[] values();
+    public static com.kaikai.test.Gender valueOf(java.lang.String);
 }
 枚举类型本质还是一个类,而且默认就是fianl修饰以及默认继承父类java.lang.Enum。
 同时构造器是自动生成的且是私有的,表示不可再创建对象。(使用反射也不行)
@@ -1756,7 +1756,7 @@ Class c = Student.class;
 3.使用Class类中的forName方法获得
 //这种方法很灵活,只需一个String类型参数即可，String类型的数据改变起来很容易
 //该方法会抛出异常，需要包名
-Class c = Class.forName("com.briup.test.Student");
+Class c = Class.forName("com.kaikai.test.Student");
 注:以上三种方法获得的同一个对象(==比较),因为每个类型内存都有且只有一个Class类型对象
 ```
 
