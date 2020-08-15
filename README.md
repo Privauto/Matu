@@ -7,6 +7,8 @@
 - 算法题解
 - JVM知识
 
+[点击预览](https://github.com/Catkaikai/MyJava/blob/master/corejava_复习.md)
+
 #### To Do
 
 - [x] 常识
