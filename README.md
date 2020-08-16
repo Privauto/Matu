@@ -30,3 +30,20 @@
 - 欢迎指出文档中错误的地方(建议提供错误的位置)
 - 欢迎提建议
 - [Github Issues](https://github.com/Catkaikai/MyJava/issues)
+
+#### 大佬们的知识仓库
+
+##### [GitHub 技术社区 Doocs](https://github.com/doocs)
+
+- [Java工程师成神之路](https://github.com/hollischuang/toBeTopJavaer)
+- [Java面试+Java学习指南](https://github.com/AobingJava/JavaFamily)
+- [[CS-Notes](https://github.com/CyC2018/CS-Notes)](https://github.com/CyC2018/CS-Notes)
+- [互联网 Java 工程师进阶知识完全扫盲](https://github.com/doocs/advanced-java)
+- ......
+
+#### 工作篇
+
+- [955.WLB](https://github.com/formulahendry/955.WLB)
+- ​[996.ICU](https://github.com/996icu/996.ICU)`危险网站谨慎访问`:pray:
+- [1155.Life](https://github.com/formulahendry/1155.Life)
+
