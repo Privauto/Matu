@@ -415,6 +415,7 @@ boolean类型数据的值为true或者false,在JVM中会转换为1或者0
 
 	char是字符,String是字符串,String是类类型,而char是基本数据类型
 	String类由final修饰所以不可继承，在Java8中String类型由char组成，而在后续版本由byte组成
+	String 是有lengh方法的，只要是数组就有length方法
 	
 	1)字符编码
 		Java语言对文本字符采用Unicode编码。由于计算机内存只能存取二进制数据，因此必须为各个字符进行编码。
@@ -834,6 +835,7 @@ public void sort(int[] a) {
         }
     }
 }
+
 ```
 
 ##### 4.二维数组
@@ -2380,6 +2382,8 @@ intenet层       IP ICMP ARP
 |   表示层   |  6   |      数据转换、确认数据格式      |
 |   应用层   |  7   |         提供用户程序接口         |
 
+###### 3.
+
 #### 异常(Exception)
 
 > `Throwable`子类:`Exception`(捕获异常对象并抛出)和`Error`(程序无法处理)
@@ -2574,7 +2578,7 @@ public class Thread implements Runnable{
 
 <img src=".\img\线程生命周期.jpg" style="zoom:65%;" />`生命周期`
 
-##### 6.hreadGroup线程组
+##### 6.ThreadGroup线程组
 
 > Java中使用ThreadGroup来表示线程组,它可以对一批线程进行分类管理,对线程组的控管理,即同时控制线程组里面的这一批线程
 
@@ -2665,6 +2669,8 @@ isInterrupted和interrupted的返回值就是这个boolean类型的值。区别�
 两个或多个线程可以共享对象中的数据
 
 ##### 9.线程同步的实现
+
+
 
 ##### 10.线程通信
 
@@ -2776,10 +2782,9 @@ public static void main(String[] args) {
 
 ```
 互斥条件：一个资源每次只能被一个进程使用，即在一段时间内某 资源仅为一个进程所占有。此时若有其他进程请求该资源，则请求进程只能等待。
+不可剥夺条件:进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能 由获得该资源的进程自己来释放（只能是主动释放)。
 
 请求与保持条件：进程已经保持了至少一个资源，但又提出了新的资源请求，而该资源 已被其他进程占有，此时请求进程被阻塞，但对自己已获得的资源保持不放。
-
-不可剥夺条件:进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能 由获得该资源的进程自己来释放（只能是主动释放)。
 
 循环等待条件: 若干进程间形成首尾相接循环等待资源的关系
 ```
@@ -2849,6 +2854,17 @@ public static void main(String[] args) {
 ```
 设 A 为一个有 n 个数字的有序集 (n>1)，其中所有数字各不相同。如果存在正整数 i, j 使得 1 ≤ i < j ≤ n 而且 A[i] > A[j]，则 <A[i], A[j]> 这个有序对称为 A 的一个逆序对，也称作逆序数。
 通俗讲就是前面的比后面的值大就是逆序对
+```
+
+###### 哈夫曼树
+
+```
+步骤1.从最小的两个权值开始搭建树
+该数作为新权值与剩下的权值重复步骤1
+直到所有权值都在树中，哈夫曼树构建完毕
+
+权值就是频率
+节点访问路径可为表示为 左0右1 访问路径即编码
 ```
 
 
@@ -4965,6 +4981,397 @@ m行每行一个数表示答案。
  ->
 第四次：1 2 3 4 -> 逆序对数为0
 ```
+
+
+
+### HR & ETC
+
+#### 服务端问题
+
+##### HTML
+
+	1.HTML4.01的文档类型声明有三种:strict,loose,frameset,这三种分别表示的含义是什么?
+	strict		严格的文档类型
+	loose		宽松的文档类型
+	frameset	框架文档类型
+	
+	2.HTML页面中的meta元素的作用是什么?
+	定义元数据关键字
+	例如描述页面作者、版权信息、关键字信息等
+	<meta name="Author" content="licy">
+	<meta name="Copyright" content="版权信息">
+	<meta name="Description" content="描述信息">
+	<meta name="keywords" lang="zh-cn" content="精品图书">	
+	设置请求报头
+	例如设置Content-Type,设置Cache-Control等
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	3.<div id="dd" class="header">hello</div>,分别使用标签选择器/类选择器/ID选择器来选中
+	这个div,并且改变div中文字的颜色为红色
+		标签选择器:
+			div{
+				color:red;
+			}
+		类选择器:
+			.header{
+				color:red;
+			}
+		ID选择器:
+			#dd{
+				color:red;
+			}
+##### jsp
+
+```
+0.jsp的全称是什么?jsp和html的区别是什么？
+	jsp的全称为: java server page
+	jsp是动态页面,其中可以嵌入java代码,其本质是一个servlet
+	html是静态页面,其中不能嵌入java代码
+1.hello.jsp页面将来被翻译成的java文件的名字叫什么?hello.jsp页面中有如下代码,这三种情况的代码分别会被翻译到java类中的什么位置?
+	jsp语法
+		<%=代码1  %>
+		<% 代码2  %>
+		<%!代码3  %>
+	hello.jsp被翻译成的java类的名字为: hello_jsp.java
+	代码1 被翻译成hello_jsp类中的_jspService方法里面的out.print(..)的参数.
+	代码2 被翻译成hello_jsp类中的_jspService方法中的代码
+	代码3 被翻译成hello_jsp类中代码
+2.jsp的指令元素分别有哪些,他们的作用是什么？
+	page指令:		设置jsp页面的相关信息
+	include指令:	在jsp页面中完成静态包含的效果
+	taglib指令:		在jsp中引入标签库
+3.列出三个常见到的jsp动作元素,并且说明其作用？
+	<jsp:useBean> 使用javabean对象
+	<jsp:forward> 进行服务器内部跳转
+	<jsp:param>	  进行参数传递
+4.jsp中的内置对象有哪些,分别列举出来
+	PageContext         pageContext
+	HttpServletRequest  request
+	HttpSession			session
+	ServletContext	    application
+	Object				page
+	HttpServletResponse response
+	JspWriter			out
+	ServletConfig	    config
+	Throwable			exception
+5.JSP页面四大容器对象（域对象）及作用范围？
+	容器对象			作用范围
+	pageContext 		当前页面（一个页面）
+	request 		一次请求
+	session 		一次会话
+	application		整个web应用/整个项目
+6.jsp页面中直接嵌入java代码会让页面慢慢变得难以维护,所以我们常常会采用另外一种方式来处理,这种方式是什么?
+	JSTL标签库+EL表达式
+7.servlet中,解决get方式和post方式传参有乱码的方案是什么?
+	get方式乱码:
+		在tomcat服务器中server.xml文件<Connector>标签中加入新的属性URIEncoding="UTF-8"
+	post方式乱码:
+		在使用request获取参数之前,把request中的编码进行设置
+		request.setCharacterEncoding("UTF-8");
+8.servlet中的服务器跳转和客户端重定向的区别？
+	转发在服务器端完成的,重定向是在客户端完成的
+	服务器跳转
+		使用request对象来完成,本质是让同一个请求在服务器内部的资源之间进行转发	
+	重定向的区别
+		使用response对象来完成,本质是让浏览器再重新发送一个新的请求	
+9.请说明request.getAttribute()和request.getParameter()区别
+	request.getAttribute()，获取容器对象request的值，返回值为Object；
+	request.getParameter()，获取请求中参数的值，返回值为String。
+
+10.在路径中最左边的"/"，让服务器解析和让客户端解析分别是什么含义？	
+	服务器解析
+		路径中最左边的/代表的是url中项目名后面的/	
+	客户端解析
+		路径中最左边的/代表的是url中端口号后面的/
+11.浏览器每次发送请求,服务器是怎么根据cookie中的值来找到其对应的session对象的?
+	1)客户端访问服务器的时候,假设服务器创建了一个session对象,服务器端的内存里面同时可能有好多个session对象,分别对应的不同客户端的访问,每一个session对象都有一个唯一的id值,叫做JSESSIONID。
+	2)服务器端给客户端产生一个session对象后,会通过这次访问的response对象把这个session的JSESSIONID的值返回给浏览器,浏览器接收到后会把这个值以一个cookie文件的形式保存起来.
+	3)在此之后,这个浏览器再发请求到服务器的时候,就会把之前保存在cookie文件中的JSESSIONID的值传给服务器,服务器通过这个JESSIONID的值就能够知道服务器内存中是哪一个session对象和当前这个客户端对应.
+20.过滤器filter在拦截到请求之后,会调用哪个方法?filter和filter直接进行请求的传递应该调用哪个方法?
+	filter在拦截到请求之后,调用的方法是doFilter
+	filter和filter直接进行请求的传递,调用的方法是chain.doFilter
+21.Servlet的生命周期？
+	1.初始化阶段：调用init()方法
+	2.响应客户请求阶段：调用service()方法，根据请求参数的不同调用doGet()或者doPost()
+	3.终止阶段：调用destroy()方法
+22.描述Cookie和Session的作用，区别和各自的应用范围。
+	cookie记录在客户端，session记录在服务器端;
+	cookie因为保存在客户端，所以不是很安全，保存在服务器端会更安全。
+	cookie有长度限制，session没有。
+	每一个session在服务端有一个sessionID作一个标识。存储的数据量大;浏览器的Cookies 不能超过300个，并且每个不能超过4KB，因此总Cookie 文件大小限制在1200KB 之内。
+	Cookie是在客户端开辟的一块可长期存储用户信息的地方；Session是在服务器内存中开辟的一块存储用户信息的地方；
+```
+
+##### 架构
+
+```
+1.什么是C/S架构，什么是B/S架构，他们之间的联系是？
+	C/S架构：Client-Server 客户端-服务器端模式
+	B/S架构：Browser-Server 浏览器-服务器模式
+	B/S特殊的C/S架构，对C/S结构的一种变化或者改进的架构。
+2.软件开发的三层架构是哪三层？各个层级的作用分别是什么？
+	dao层		数据访问层/数据交互层		与数据库进行增删改查操作
+	service层	业务逻辑层					处理业务逻辑，如登录的判断
+	web层		表现层/用户访问层			接收请求，反馈(页面/数据)
+		
+```
+
+##### mybatis
+
+```
+1.mybatis中配置文件，映射文件，映射接口三者是如何关联的？
+	配置文件关联映射文件：mapper标签的resource属性
+	映射文件关联映射接口：mapper标签的namespace属性
+2.mybatis一对一映射和一对多映射使用的标签分别是？
+	[resultMap] association
+	[resultMap] collection
+```
+
+##### Spring 
+
+```
+1.spring中的DI、IOC和AOP分别指的是什么?
+	DI (Dependency Injection) 依赖注入
+	IOC(Inversion of Control) 控制反转
+	AOP(Aspect Oriented Programming) 面向切面编程
+2.在spring的注解配置中,项目里的web层、service层、dao层的类分别使用什么注解进行配置？
+	web 层使用@Controller
+	service 层使用@Service
+	dao层使用@Repository
+3.Java中代理模式分为几类，有什么区别？
+	静态代理：由程序员创建代理类或特定工具自动生成源代码再对其编译。在程序运行前代理类的.class文件就已经存在了。【即 在程序运行前，目标类完成，代理类完成。】
+	动态代理：在程序运行时运用反射机制动态创建而成。【即 在程序运行前，目标类完成，代理类未完成。】
+4.在spring的AOP中,joinPoint和pointCut俩个概念分别是什么意思?
+	joinPoint表示连接点 在spring的aop中只有 类中的方法 可以做连接点,每一个方法都可以是一个连接点.
+	pointCut表示切入点 
+5.什么是Spring MVC ？简单介绍下你对springMVC的理解?		
+	Spring MVC是一个基于Java的实现了MVC设计模式的请求驱动类型的轻量级Web框架，通过把Model，View，Controller分离，将web层进行职责解耦，把复杂的web应用分成逻辑清晰的几部分，简化开发，减少出错，方便组内开发人员之间的配合。
+6.Springmvc的优点。
+	（1）可以支持各种视图技术,而不仅仅局限于JSP；
+	（2）与Spring框架集成（如IoC容器、AOP等）；
+	（3）清晰的角色分配：前端控制器(dispatcherServlet) , 请求到处理器映射（handlerMapping), 处理器适配器（HandlerAdapter), 视图解析器（ViewResolver）。
+	（4） 支持各种请求资源的映射策略。
+7.在SpringMVC中完成一次请求,所涉及到的核心组件有哪些?
+	1)DispatcherServlet:    前端控制器	请求入口
+	2)Controller/Headler:   控制器/处理器	
+	3)HandlerMapping:		处理器映射器	请求派发,负责请求和控制器建立一一对应的关系
+	4)HandlerAdaptor:		处理器适配器	
+	5)ViewResolver:			视图解析器	定位页面
+8.Controller中的功能处理方法的返回值类型一般都有哪些,分别表示什么?
+	1)ModelAndView  表示模型和视图的结合体
+	2)String		表示逻辑视图名
+	3)void			表示方法内部自己处理影响内容
+9.注解@Controller和@RestController有什么异同？
+	相同点：都写在类名上，标识着这是一个控制器
+	不同点：
+	@RestController是restful开发风格，相当于@Controller + 类中每个方法都有注解@ResponseBody
+10.springMVC中，我们可以使用哪些对象将数据带到页面？
+	HttpServletRequest, HttpSession, ServletContext, Map, Model, ModelMap
+11.@RequestBody和@ResponseBody分别表示什么意思
+	@RequestBody表示从请求的正文中取值 // spring就会将request body中的json/xml对象解析成该参数类型的Javabean对象。
+	@ResponseBody表示当前功能处理方法的返回值作为响应的正文	
+12.如下配置,表示的含义是什么?
+	<mvc:view-controller path="/hello" view-name="hello"></mvc:view-controller>
+	当前浏览器访问的url为/hello的时候,SpringMVC内部则直接返回名字为hello的逻辑视图给视图解析器	
+13.如下配置表示什么意思?请写出符合url。		      
+	@RequestMapping(value="/user/{userId:^\\d{4}-[a-z]{2}$}")
+	该url采用的时候正则表达式风格的映射,浏览器只有发送符合表达式规则的请求才会被处理,例如: /user/1234-ab
+14.@RequestMapping注解中的consumes属性和produces属性,分别和请求头信息中的哪个key对应
+	consumes对应请求头信息中的Content-Type	代表发送端（客户端|服务器）发送的实体数据的数据类型
+	produces对应请求头信息中的Accept	代表发送端（客户端）希望接受的数据类型。
+15.@InitBinder注解可以解决什么问题?
+	浏览器传值给Controller中的功能处理方法,需要把传的值按照自己定义的规则转换为指定的对象,这时候可以在该Controller中使用@InitBinder注解来进行处理.例如:把浏览器传的字符串转换为日期对象
+16.@Scope注解的作用。
+	SpringMVC中的Controller对象默认是单例,可以使用@Scope注解将其变为非单例.
+17.在SpringMVC中如何使用返回字符串的形式来表示服务器内部跳转/hello,以及然后表示客户端重定向到/hello。
+	服务器内部跳转
+		return "forward:/hello";
+	客户端重定向
+		return "redirect:/hello";
+18.SpringMVC中一般实现拦截器的方式有几种？分别介绍下。
+	第一种方式是要定义的Interceptor类要实现了Spring的HandlerInterceptor 接口
+	第二种方式是继承实现了HandlerInterceptor接口的类，比如Spring已经提供的实现了HandlerInterceptor接口的抽象类HandlerInterceptorAdapter
+19.Spring Boot 需要独立的容器运行吗？
+	可以不需要，内置了 Tomcat/Jetty 等容器。
+20.运行 Spring Boot 有哪几种方式？
+	1）打包用命令或者放到容器中运行
+	2）用 Maven/Gradle 插件运行
+	3）直接执行 main 方法运行
+21.简述Spring Boot的优点.
+	简化编码
+	简化配置
+	简化构建
+	简化部署
+	简化监控	 
+	spring boot 可以快速的开发出 restful 风格的系统架构。 
+	方便的自动化，非常适合做微服务架构的搭建
+	单一 jar 包运行的方式让部署和管理也非常方便。
+	除了精简配置这方面, 另外还可以让 spring 生态圈和其他工具链进行方便快速的整合(比如 redis, email, hibernate,mybatis,amqp 等)
+
+22.Spring Boot 的配置文件有哪几种格式？它们有什么区别？
+	.properties 和 .yml，它们的区别主要是书写格式不同。另外，.yml 格式不支持 @PropertySource 注解导入配置。
+23.Sping Boot 自动配置是如何实现的。
+	@ComponentScan将扫描和加载一些自定义的类，@EnableAutoConfiguration将导入一些自动配置的类。
+	这些自动配置的类很多，并且他们都处于org.springframework.boot.autoconfigure这个包下面。
+	这些配置类都会被导入并处于备用状态。假如你在maven文件当中引入了相关的包的时候，相关功能将被启用。
+	自动配置在加载一个类的时候，会首先去读取项目当中的配置文件（application.properties），假如没有，就会启用默认值
+24.为什么要使用Spring Data。
+	Spring Data JPA为Java Persistence API（JPA）提供了存储库支持。它简化了需要访问JPA数据源的应用程序的开发。
+25.使用 Spring Data JPA 进行持久层开发需要继承什么接口？
+	JpaRepositories
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
