@@ -1087,6 +1087,12 @@ public class Person{
 |  default  |  Y   |    Y     |      N       |     N      |
 |  private  |  Y   |    N     |      N       |     N      |
 
+#### 序列化
+
+```
+实现Serializable接口即可通io流序列化
+```
+
 #### 包装类(Wrapper)
 
 ##### 1.常见包装类
@@ -1281,7 +1287,7 @@ TreeSet也是基于 TreeMap 的k实现的，元素不可重复，特性同 TreeM
 
 `Map`主要实现类:`HashMap`、`LinkedHashMap`、`TreeMap`、`IdentityHashMap`、`WeakHashMap`、`Hashtable`、`Properties`。
 
-##### 1、HashMap
+###### 1、HashMap
 
 ```
 继承自AbstractMap，key不可重复，使用哈希表存储元素，输入的数据与输出的数据顺序基本不一致，HashMap最多只允许一条记录的key 为null。不保证元素顺序，根据需要该容器可能会对元素重新哈希，元素的顺序也会被重新打散，不同时间遍历同一个HashMap的顺序可能会不同。
@@ -1428,7 +1434,7 @@ static int indexFor(int h, int length) {
 
 
 
-##### 红黑树
+###### 红黑树
 
 > 避免在最极端的情况下冲突链表变得很长，导致查询效率非常慢。
 >
@@ -1513,7 +1519,7 @@ NIL和null的区别，NIL是无值的意思不是空
 
 <img src=".\img\查询过程.png" style="zoom:33%;" />`查询过程`
 
-##### 二叉树
+###### 二叉树
 
 ###### 0.树结构
 
@@ -1538,19 +1544,19 @@ NIL和null的区别，NIL是无值的意思不是空
 层序遍历结果为：1 2 3 4 5 6 7 8
 ```
 
-##### 2、LinkedHashMap
+###### 2、LinkedHashMap
 
 ```
 HashMap的子类，内部使用链表数据结构来记录插入的顺序使输入的记录顺序和输出的记录顺序相同的。LinkedHashMap与HashMap最大的不同处是LinkedHashMap输入的记录和输出的记录顺序是相同的
 ```
 
-##### 3、IdentityHashMap
+###### 3、IdentityHashMap
 
 ```
 继承自AbstractMap，与HashMap有些不同，在获取元素的时候，通过==代替equals ()来进行判断。
 ```
 
-##### 4、TreeMap
+###### 4、TreeMap
 
 ```java
 能够把它保存的记录根据键排序，默认是按键值的升序排序，也可以指定排序的比较器，当用 Iterator 遍历时，得到的记录是排过序的。如需使用排序的映射使用TreeMap。TreeMap实际使用的少
@@ -1564,13 +1570,13 @@ Set set = new TreeSet(new Comparator() {
 });
 ```
 
-##### 5、WeakHashMap
+###### 5、WeakHashMap
 
 ```
 WeakHashMap继承自AbstractMap，被称为缓存Map，向WeakHashMap中添加元素，再次通过键调用方法获取元素方法时，不一定获取到元素值，因为WeakHashMap中的Entry随时可能被 GC 回收。有啥用？
 ```
 
-##### 6、Hashtable
+###### 6、Hashtable
 
 ```
 Hashtable，一个元老级的类，键值不能为空，方法都加了synchronized同步锁，线程安全，但没有HashMap快
@@ -1579,7 +1585,7 @@ HashMap是HashTable的轻量级实现，他们都实现了Map接口，区别在�
 Map<String, Object> map =Collections.synchronizedMap(new HashMap<>());
 ```
 
-##### 7、Properties
+###### 7、Properties
 
 ```
 Properties继承自HashTable，Properties新增了load()和和store()方法，可以直接导入或者将映射写入文件，Properties的键和值都是String类型。
@@ -1627,6 +1633,7 @@ PriorityQueue也是一个队列的实现类，此实现类中存储的元素排�
 
 ```java
 addAll：向指定的集合c中加入特定的一些元素elements
+    就是把一个集合里的所有东西放到另一个集合里
 源码：
 public static <T> boolean addAll(Collection<? super T> c, T… elements)
 ```
@@ -1705,6 +1712,7 @@ public static <T> List<T> asList(T... a) {
         return new ArrayList<>(a);
 }
 注意：返回的List是定长的，企图添加或者删除数据都会报错java.lang.UnsupportedOperationException真是有病
+    其实就是起一个中间流程，绝对会搭配addall使用
 ```
 
 ##### 2、sort
@@ -2244,7 +2252,7 @@ public final Object readObject(){..}
 ###### 10.ObjectOutputStream
 
 ```
-ObjectOutputStream类中的方法可以完成对象的序列化:
+ObjectOutputStream类中的方法可以完成对象的序列化: 
 public final void writeObject(Object obj){..}
 ```
 
@@ -2340,7 +2348,7 @@ RandomAccessFile rw = new RandomAccessFile(filePath,"rw");
 
 ##### 6.网络中的I/O流
 
-###### 1.网络协议
+###### 1.应用层网络协议
 
 |                             协议                             |              端口              |
 | :----------------------------------------------------------: | :----------------------------: |
@@ -2356,33 +2364,26 @@ RandomAccessFile rw = new RandomAccessFile(filePath,"rw");
 |                    Telnet（运程控制协议）                    |               23               |
 
 ```
-进程/应用层     	Telnet FTP SMTP HTTP DNS
-主机-主机层    	TCP    UDP
-intenet层       IP ICMP ARP
-1.进程/应用层协议，每个协议都由客程序和服务程序两部分组成，服务器与客户机交互而工作。
-2.主机-主机层协议，建立并且维护连接，用于保证主机间数据传输的安全性
-	TCP（Transmission Control Protocol:传输控制协议；面向连接，可靠传输
-	UDP（User Datagram Protocol）:用户数据报协议；面向无连接，不可靠传输
-3.Internet层协议，负责数据的传输，在不同网络和系统间寻找路由、分段和重组数据报文、设备寻址。
-	IP（Internet Protocol）:Internet协议,负责TCP/IP主机间提供数据报服务,进行数据封装并产生协议头,TCP与UDP协议的基础。
-	ICMP（Internet Control Message Protocol）:Internet控制报文协议。ICMP协议其实是IP协议的的附属协议，IP协议用它来与其它主机或路由器交换错误报文和其它的一些网络情况，在ICMP包中携带了控制信息和故障恢复信息。
-	ARP（Address Resolution Protocol）协议：地址解析协议。
-	RARP（Reverse Address Resolution Protocol）：逆向地址解析协议
+TCP（Transmission Control Protocol:传输控制协议；面向连接，可靠传输
+UDP（User Datagram Protocol）:用户数据报协议；面向无连接，不可靠传输
+IP（Internet Protocol）:Internet协议,负责TCP/IP主机间提供数据报服务,进行数据封装并产生协议头,TCP与UDP协议的基础。
+ICMP（Internet Control Message Protocol）:Internet控制报文协议。ICMP协议其实是IP协议的的附属协议，IP协议用它来与其它主机或路由器交换错误报文和其它的一些网络情况，在ICMP包中携带了控制信息和故障恢复信息。
+ARP（Address Resolution Protocol）协议：地址解析协议。
+RARP（Reverse Address Resolution Protocol）：逆向地址解析协议
 ```
 
-###### 2.七层结构 OSI模型
+###### 2.模型
 
-|    名称    | 层次 |               功能               |
-| :--------: | :--: | :------------------------------: |
-|   物理层   |  1   | 实现计算机系统与网络间的物理连接 |
-| 数据链路层 |  2   |  进行数据打包与解包，形成信息帧  |
-|   网络层   |  3   |        提供数据通过的路由        |
-|   传输层   |  4   |      提供传输顺序信息与响应      |
-|   会话层   |  5   |          建立和中止连接          |
-|   表示层   |  6   |      数据转换、确认数据格式      |
-|   应用层   |  7   |         提供用户程序接口         |
-
-###### 3.
+| TCP/IP体系结构 | OSI七层网络模型 | 层次 |                协议                |                 功能                 |
+| :------------: | :-------------: | :--: | :--------------------------------: | :----------------------------------: |
+|   数据链路层   |     物理层      |  1   |    IEEE 802.1A，IEEE802.2到.11     |         传输01组成的`比特`流         |
+|                |   数据链路层    |  2   | FDDI Ethernet Arpanet PDN SLIP PPP |   进行数据打包与解包，形成信息`帧`   |
+|     网络层     |     网络层      |  3   | `IP` `ICMP` `ARP` `RARP` AKP UUCP  |    提供主机系统之间连接和路径选择    |
+|     传输层     |     传输层      |  4   |               `TCP`                | TCP传输控制协议,传输效率低,可靠性强  |
+|                |                 |      |               `UDP`                | UDP用户数据报协议相反.分`段`传输重组 |
+|                |     会话层      |  5   |            SMTP  `DNS`             |       通过传输层建立和中止连接       |
+|     应用层     |     表示层      |  6   |    `Telnet` Rlogin SNMP Gopher     |  提供兼容性、数据转换、确认数据格式  |
+|                |     应用层      |  7   | `HTTP` TFTP `FTP` NFS WAIS `SMTP`  |                `报文`                |
 
 #### 异常(Exception)
 
@@ -2670,7 +2671,50 @@ isInterrupted和interrupted的返回值就是这个boolean类型的值。区别�
 
 ##### 9.线程同步的实现
 
+###### 1.使用synchronize
 
+```
+1.同步方法 
+即有synchronized关键字修饰的方法。 由于java的每个对象都有一个内置锁，当用此关键字修饰方法时， 内置锁会保护整个方法。在调用该方法前，需要获得内置锁，否则就处于阻塞状态。
+public synchronized void save(){
+}
+注： synchronized关键字也可以修饰静态方法，此时如果调用该静态方法，将会锁住整个类
+2.同步代码块 
+即有synchronized关键字修饰的语句块。 
+被该关键字修饰的语句块会自动被加上内置锁，从而实现同步
+synchronized(object){ 
+}
+注：同步是一种高开销的操作，因此应该尽量减少同步的内容。 
+通常没有必要同步整个方法，使用synchronized代码块同步关键代码即可。 
+```
+
+###### 2.ThreadLocal
+
+```
+每个线程都有一个自己的副本，互不干扰。该副本只能存取一个值
+```
+
+###### 3.使用特殊域变量(volatile)，生产环境不要用，坑
+
+> volatile关键字为域变量的访问提供了一种免锁机制， 
+> 使用volatile修饰域相当于告诉虚拟机该域可能会被其他线程更新， 
+> 因此每次使用该域就要重新计算，而不是使用寄存器中的值 
+>  volatile不会提供任何原子操作，它也不能用来修饰final类型的变量 
+
+```
+声明变量时加入修饰符volatile
+注：多线程中的非同步问题主要出现在对域的读写上，如果让域自身避免这个问题，则就不需要修改操作该域的方法。 
+    用final域，有锁保护的域和volatile域可以避免非同步的问题。 
+```
+
+###### 4.重入锁
+
+```
+ReenreantLock类的常用方法有：
+ReentrantLock() : 创建一个ReentrantLock实例 
+lock() : 获得锁 
+unlock() : 释放锁 
+```
 
 ##### 10.线程通信
 
@@ -2734,6 +2778,59 @@ public synchronized void test(){
 }
 ```
 
+##### 11.线程池
+
+```
+Java通过Executors提供四种线程池
+    CachedThreadPool()：可缓存线程池。
+    FixedThreadPool()：定长线程池。
+    ScheduledThreadPool()：定时线程池。
+    SingleThreadExecutor()：单线程化的线程池。
+ThreadPoolExecutor的执行流程
+    线程数量未达到corePoolSize，则新建一个线程(核心线程)执行任务。
+    线程数量达到了corePools，则将任务移入队列等待。
+    队列已满，新建线程(非核心线程)执行任务。
+    队列已满，总线程数又达到了maximumPoolSize，就会由(RejectedExecutionHandler)抛出异常(拒绝策略)
+    新建线程->达到核心数->加入队列->新建线程（非核心）->达到最大数->触发拒绝策略
+ThreadPoolExecutor的几个参数
+    corePoolSize：核心池的大小，这个参数跟后面讲述的线程池的实现原理有非常大的关系。在创建了线程池后，默认情况下，线程池中并没有任何线程，而是等待有任务到来才创建线程去执行任务，除非调用了prestartAllCoreThreads()或者prestartCoreThread()方法，从这2个方法的名字就可以看出，是预创建线程的意思，即在没有任务到来之前就创建corePoolSize个线程或者一个线程。默认情况下，在创建了线程池后，线程池中的线程数为0，当有任务来之后，就会创建一个线程去执行任务，当线程池中的线程数目达到corePoolSize后，就会把到达的任务放到缓存队列当中。
+    maximumPoolSize：线程池最大线程数，这个参数也是一个非常重要的参数，它表示在线程池中最多能创建多少个线程；如果当前阻塞队列满了，且继续提交任务，则创建新的线程执行任务，前提是当前线程数小于maximumPoolSize；当阻塞队列是无界队列，则	  maximumPoolSize不起作用，因为无法提交至核心线程池的线程会一直持续地放入workQueue(工作队列)中。
+    keepAliveTime：表示线程没有任务执行时最多保持多久时间会终止。默认情况下，只有当线程池中的线程数大于corePoolSize时，keepAliveTime才会起作用，直到线程池中的线程数不大于corePoolSize，即当线程池中线程数大于corePoolSize时，如果一个线程空闲的时间达到keepAliveTime，则会终止，直到线程池中的线程数不超过corePoolSize。但是如果调用了allowCoreThreadTimeOut(boolean)方法，在线程池中的线程数不大于corePoolSize时，keepAliveTime参数也会起作用，直到线程池中的线程数为0。
+    allowCoreThreadTimeout：默认情况下超过keepAliveTime的时候，核心线程不会退出，可通过将该参数设置为true，让核心线程也退出。
+    unit：可以指定keepAliveTime的时间单位。
+    workQueue
+    ArrayBlockingQueue有界队列，需要指定队列大小。
+    LinkedBlockingQueue若指定大小则和ArrayBlockingQueue类似，若不指定大小则默认能存储Integer.MAX_VALUE个任务，相当于无界队列，此时maximumPoolSize值其实是无意义的。
+    SynchronousQueue同步阻塞队列，当有任务添加进来后，必须有线程从队列中取出，当前线程才会被释放，newCachedThreadPool就使用这种队列。
+    RejectedExecutionHandler：线程数和队列都满的情况下，线程池会执行的拒绝策略，有四个(也可以使用自定义的策略)。
+    线程池的四种拒绝策略
+    AbortPolicy：不执行新任务，直接抛出异常，提示线程池已满，线程池默认策略。
+    DiscardPolicy：不执行新任务，也不抛出异常，基本上为静默模式。
+    DisCardOldSetPolicy：将消息队列中的第一个任务替换为当前新进来的任务执行。
+    CallerRunPolicy：拒绝新任务进入，如果该线程池还没被关闭，那么这个新的任务在执行线程中被调用。
+    Executors和ThreadPoolExecutor创建线程的区别
+    Executors
+    newFixedThreadPool和newSingleThreadExecutor:主要问题是堆积的请求处理队列可能会耗费非常大的内存，甚至OOM。
+    newCachedThreadPool和newScheduledThreadPool:主要问题是线程数最大数是Integer.MAX_VALUE(2的31次方-1，int类型最大值)，可能会创建数量非常多的线程。
+    
+ThreadPool Executor 
+	创建线程池方式只有一种ExecutorService pool = Executors.newCachedThreadPool();
+为什么使用线程池？
+    减少了创建和销毁线程的次数，每个工作线程都可以被重复利用，可执行多个任务。
+    运用线程池能有效的控制线程最大并发数，可以根据系统的承受能力，调整线程池中工作线线程的数目，防止因为消耗过多的内存，而把服务器累趴下(每个线程需要大约1MB内存，线程开的越多，消耗的内存也就越大，最后死机)。
+    对线程进行一些简单的管理，比如：延时执行、定时循环执行的策略等，运用线程池都能进行很好的实现。
+如何向线程池中提交任务？
+    可以通过execute()或submit()两个方法向线程池提交任务。
+    execute()方法没有返回值，所以无法判断任务知否被线程池执行成功。
+    submit()方法返回一个future,那么我们可以通过这个future来判断任务是否执行成功，通过future的get方法来获取返回值。
+如何关闭线程池？
+    通过shutdown()或shutdownNow()方法来关闭线程池。
+    狠shutdown的原理是只是将线程池的状态设置成SHUTDOWN状态，然后中断所有没有正在执行任务的线程。
+    温柔shutdownNow的原理是遍历线程池中的工作线程，然后逐个调用线程的interrupt方法来中断线程，所以无法响应中断的任务可能永远无法终止。shutdownNow会首先将线程池的状态设置成STOP，然后尝试停止所有的正在执行或暂停任务的线程，并返回等待执行任务的列表。
+```
+
+
+
 ##### 死锁
 
 ```java
@@ -2742,39 +2839,39 @@ public synchronized void test(){
 public class ThreadDeadLock extends Thread{
 	private Object obj1;
 	private Object obj2;
-public ThreadDeadLock(Object obj1,Object obj2) {
-    this.obj1 = obj1;
-    this.obj2 = obj2;
-}
-public void run() {
-String name = Thread.currentThread().getName();
-    if("Thread-0".equals(name)){
-    while(true){
-    	synchronized (obj1) {
-    		synchronized (obj2) {
-    			System.out.println(name+" 运行了..");
-    			}
-    		}
-    	}
+    public ThreadDeadLock(Object obj1,Object obj2) {
+        this.obj1 = obj1;
+        this.obj2 = obj2;
     }
-    else{
-    while(true){
-    	synchronized (obj2) {
-   			synchronized (obj1) {
-    			System.out.println(name+" 运行了..");
-    			}
-    		}
-    	}
+    public void run() {
+    String name = Thread.currentThread().getName();
+        if("Thread-0".equals(name)){
+        while(true){
+            synchronized (obj1) {
+                synchronized (obj2) {
+                    System.out.println(name+" 运行了..");
+                    }
+                }
+            }
+        }
+        else{
+        while(true){
+            synchronized (obj2) {
+                synchronized (obj1) {
+                    System.out.println(name+" 运行了..");
+                    }
+                }
+            }
+        }
     }
-}
-public static void main(String[] args) {
-    Object obj1 = new Object();
-    Object obj2 = new Object();
-    Thread t1 = new ThreadDeadLock(obj1,obj2);
-    Thread t2 = new ThreadDeadLock(obj1,obj2);
-    t1.start();
-    t2.start();
-	}
+    public static void main(String[] args) {
+        Object obj1 = new Object();
+        Object obj2 = new Object();
+        Thread t1 = new ThreadDeadLock(obj1,obj2);
+        Thread t2 = new ThreadDeadLock(obj1,obj2);
+        t1.start();
+        t2.start();
+    }
 }
 ```
 
@@ -3762,7 +3859,7 @@ public int FindGreatestSumOfSubArray(int[] nums) {
     int greatestSum = Integer.MIN_VALUE;
     int sum = 0;
     for (int val : nums) {
-        sum = (sum <= 0) ? val : (sum + val);//规律为当有一个数使得2之前的和小于0，则从该数开始重新加
+        sum = (sum <= 0) ? val : (sum + val);//规律为当有一个数使得之前的和小于0，则从该数开始重新加
         greatestSum = Math.max(greatestSum, sum);
     }
     return greatestSum;
@@ -4982,6 +5079,96 @@ m行每行一个数表示答案。
 第四次：1 2 3 4 -> 逆序对数为0
 ```
 
+#### 网易互娱2020后台笔试题
+
+##### 1.正则表达式
+
+```
+每个输入数据包含多个测试点。每个测试点后有一个空行。 第一行为测试点的个数T(T<=100)。 每个测试点包含1行，为一个字符串”HH:MM:SS”，表示钟表显示的时间。
+对于每个测试点，输出一行。如果钟表显示的时间为真实存在的时间，则不做改动输出该时间，否则输出一个新的”HH:MM:SS”，表示修改最少的数字情况下，字典序最小的真实存在的时间。
+输入例子:
+2
+19:90:23
+23:59:59
+输出例子:
+19:00:23
+23:59:59
+```
+
+###### 代码
+
+```java
+import java.util.*;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int T=sc.nextInt();
+        sc.nextLine();
+        for(int i=0;i<T;i++){
+            System.out.println(
+                sc.nextLine().replaceFirst("^[3-9]","0").replaceFirst("^2([4-9])","0$1")
+                .replaceAll("[6-9](\\d)","0$1"));
+        }
+    }
+}
+```
+
+##### 2.linkedhashset
+
+```
+小云正在参与开发一个即时聊天工具，他负责其中的会话列表部分。
+会话列表为显示为一个从上到下的多行控件，其中每一行表示一个会话，每一个会话都可以以一个唯一正整数id表示。
+当用户在一个会话中发送或接收信息时，如果该会话已经在会话列表中，则会从原来的位置移到列表的最上方；如果没有在会话列表中，则在会话列表最上方插入该会话。
+小云在现在要做的工作是测试，他会先把会话列表清空等待接收信息。当接收完大量来自不同会话的信息后，就输出当前的会话列表，以检查其中是否有bug。
+输入的第一行为一个正整数T（T<=10），表示测试数据组数。
+接下来有T组数据。每组数据的第一行为一个正整数N（1<=N<=200），表示接收到信息的次数。第二行为N个正整数，按时间从先到后的顺序表示接收到信息的会话id。会话id不大于1000000000。
+对于每一组数据，输出一行，按会话列表从上到下的顺序，输出会话id。
+相邻的会话id以一个空格分隔，行末没有空格。
+输入例子:
+3
+5
+1 2 3 4 5
+6
+1 100 1000 1000 100 1
+7
+1 6 3 3 1 8 1
+输出例子:
+5 4 3 2 1
+1 100 1000
+1 8 3 6
+```
+
+###### 代码
+
+```java
+import java.util.*;
+import static java.lang.System.in;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(in);
+        int m = Integer.parseInt(sc.nextLine());
+        while (m-- > 0) {
+            sc.nextLine();
+            String[] ids = sc.nextLine().split(" ");
+            LinkedHashSet<String> set = new LinkedHashSet<>();
+            List list = Arrays.asList(ids);
+            Collections.reverse(list);
+            set.addAll(list);
+            StringBuilder sb = new StringBuilder();
+            for (String item : set) {
+                sb.append(item).append(" ");
+            }
+            System.out.println(sb.substring(0,sb.length()-1));
+        }
+    }
+}
+```
+
+3.回溯算法
+
+
+
 
 
 ### HR & ETC
@@ -5399,13 +5586,122 @@ m行每行一个数表示答案。
 
 ### JVM知识点
 
+**线程私有的：**
+
+- 程序计数器
+- 虚拟机栈
+- 本地方法栈
+
+**线程共享的：**
+
+- 堆
+- 方法区
+- 直接内存 (非运行时数据区的一部分)
+
 #### Java内存区域
+
+##### 程序计数器
+
+> 程序计数器是唯一一个不会出现 `OutOfMemoryError` 的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。
+
+```
+字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制
+	如：顺序执行、选择、循环、异常处理。
+在多线程的情况下，程序计数器用于记录当前线程执行的位置，从而当线程被切换回来的时候能够知道该线程上次运行到哪里。
+	每条线程都需要有一个独立的程序计数器，各线程之间计数器互不影响，独立存储
+```
+
+##### Java栈（虚拟机栈）
+
+> 它的生命周期和线程相同，描述的是 Java 方法执行的内存模型，每次方法调用的数据都是通过栈传递的。
+>
+> Java 虚拟机栈也是线程私有的，每个线程都有各自的 Java 虚拟机栈，而且随着线程的创建而创建，随着线程的死亡而死亡。
+
+```
+Java 内存可以粗糙的区分为堆内存（Heap）和
+栈内存 (Stack)-->虚拟机栈，或者说是虚拟机栈中局部变量表部分
+(Java 虚拟机栈是由一个个栈帧组成，而每个栈帧中都拥有：局部变量表、操作数栈、动态链接、方法出口信息。)
+-->局部变量表
+存放了编译期可知的各种数据类型（boolean、byte、char、short、int、float、long、double）、对象引用（reference 类型，它不同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置）。
+
+```
+
+###### Java 虚拟机栈会出现两种错误：
+
+`StackOverFlowError` 和 `OutOfMemoryError`。
+
+- **`StackOverFlowError`：** 若 Java 虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前 Java 虚拟机栈的最大深度的时候，就抛出 StackOverFlowError 错误。
+- **`OutOfMemoryError`：** 若 Java 虚拟机堆中没有空闲内存，并且垃圾回收器也无法提供更多内存的话。就会抛出 OutOfMemoryError 错误。
+
+###### 方法/函数的调用
+
+```
+Java 方法有两种返回方式：两种返回方式都会导致栈帧被弹出。
+1. return 语句。
+2. 抛出异常。
+```
+
+##### 本地方法栈
+
+> 和虚拟机栈所发挥的作用非常相似，区别是： **虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。** 在 HotSpot 虚拟机中和 Java 虚拟机栈合二为一。
+
+```
+本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。
+方法执行完毕后相应的栈帧也会出栈并释放内存空间，也会出现 StackOverFlowError 和 OutOfMemoryError 两种错误。
+```
+
+##### 堆
+
+> Java 虚拟机所管理的内存中最大的一块，Java 堆是所有线程共享的一块内存区域，在虚拟机启动时创建。**此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。**
+
+```
+Java 堆是垃圾收集器管理的主要区域，因此也被称作GC 堆（Garbage Collected Heap）.从垃圾回收的角度，由于现在收集器基本都采用分代垃圾收集算法，所以 Java 堆还可以细分为：新生代和老年代：再细致一点有：Eden 空间、From Survivor、To Survivor 空间等。进一步划分的目的是更好地回收内存，或者更快地分配内存。
+```
+
+1. 新生代内存(Young Generation)
+
+   Eden 空间、From Survivor空间、To Survivor 空间
+
+2. 老生代(Old Generation)
+
+3. 永生代(Permanent Generation)
+
+##### 方法区(非堆)
+
+> 方法区与 Java 堆一样，是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。虽然 **Java 虚拟机规范把方法区描述为堆的一个逻辑部分**，但是它却有一个别名叫做 **Non-Heap（非堆）**，目的应该是与 Java 堆区分开来。
+
+```
+《Java 虚拟机规范》只是规定了有方法区这么个概念和它的作用，并没有规定如何去实现它。那么，在不同的 JVM 上方法区的实现肯定是不同的了。 方法区和永久代的关系很像 Java 中接口和类的关系，类实现了接口，而永久代就是 HotSpot 虚拟机对虚拟机规范中方法区的一种实现方式。 也就是说，永久代是 HotSpot 的概念，方法区是 Java 虚拟机规范中的定义，是一种规范，而永久代是一种实现，一个是标准一个是实现，其他的虚拟机实现并没有永久代这一说法。
+```
+
+###### 为什么永生代在1.8被替换为元空间（直接内存）？
+
+- 整个永久代有一个 JVM 本身设置固定大小上限，无法进行调整，而元空间使用的是直接内存，受本机可用内存的限制，虽然元空间仍旧可能溢出，但是比原来出现的几率会更小。
+- 元空间里面存放的是类的元数据，这样加载多少类的元数据就不由 `MaxPermSize` 控制了, 而由系统的实际可用空间来控制，这样能加载的类就更多
+- 在 JDK8，合并 HotSpot 和 JRockit 的代码时, JRockit 从来没有一个叫永久代的东西, 合并之后就没有必要额外的设置这么一个永久代的地方
 
 #### Jvm垃圾回收
 
+```
+.引用计数算法
+早期判断对象是否存活大多都是以这种算法，这种算法判断很简单，简单来说就是给对象添加一个引用计数器，每当对象被引用一次就加1，引用失效时就减1。当为0的时候就判断对象不会再被引用。
+优点:实现简单效率高，被广泛使用与如python何游戏脚本语言上。
+缺点:难以解决循环引用的问题，就是假如两个对象互相引用已经不会再被其它其它引用，导致一直不会为0就无法进行回收。
+
+2.可达性分析算法
+目前主流的商用语言[如java、c#]采用的是可达性分析算法判断对象是否存活。这个算法有效解决了循环利用的弊端。
+它的基本思路是通过一个称为“GC Roots”的对象为起始点，搜索所经过的路径称为引用链，当一个对象到GC Roots没有任何引用跟它连接则证明对象是不可用的。
+```
+
+#### 虚拟机中对象的创建过程
+
+
+
+
+
 #### JDK监控和故障处理工具
 
-
+jconsole
 
 
 
